@@ -1,0 +1,30 @@
+{% extends "pages/index.html" %}
+{% load i18n humanize %}
+
+{% block title %}Followers{% endblock %}
+
+{% block middle_header %}
+
+{% endblock %}
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            {% for follower in user_feed.myuserprofile.followed_by.all %}
+                {% include "components/cards/user/base.html" with for_follows=False %}
+            {% empty %}
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% blocktrans %}
+                                    No one is following you.
+                                {% endblocktrans %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

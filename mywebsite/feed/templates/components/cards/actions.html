@@ -1,0 +1,42 @@
+<div class="actions d-flex flex-direction-row justify-content-right float-right">
+    <div class="action-group">
+        <!-- <div @click="shownewmessagemodal({{ video.id }}, {{ video.created_by.username }}, {{ video.body }}, {{ video.videos }})" class="btn btn-sm btn-circle z-depth-0"> -->
+        <div class="btn btn-sm btn-circle z-depth-0">
+            <i class="fa fa-comment fa-2x"></i>
+        </div>
+
+        <small>
+            {{ video.comments_set.count|default:0 }}
+        </small>
+    </div> 
+
+    <div class="action-group">
+        <div class="btn btn-sm btn-circle z-depth-0" @click="addlike('{{ video.id }}', $el)">
+            {% if video.has_liked %}
+                <i id="like-{{ video.id }}" class="fas fa-heart red-text fa-2x"></i>            
+            {% else %}
+                <i id="like-{{ video.id }}" class="fas fa-heart fa-2x"></i>            
+            {% endif %}
+        </div>
+
+        <small id="likes-count-{{ video.id }}">
+            {{ video.like_set.count|default:0 }}
+        </small>
+    </div>
+
+    <div class="action-group">
+        <div class="btn btn-sm btn-circle z-depth-0" @click="share($el, '{{ video.id }}')">
+            <i class="fa fa-retweet fa-2x"></i>
+        </div>
+        
+        <small>
+            {{ video.shares_set.count|default:0 }}
+        </small>
+    </div>
+    
+    <div class="action-group">
+        <div class="btn btn-sm btn-circle z-depth-0" @click="report('{% url 'feed:report' %}', '{{ video.id }}')">
+            <i class="fa fa-exclamation-triangle fa-2x"></i>
+        </div>
+    </div>
+</div>

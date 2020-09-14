@@ -1,0 +1,91 @@
+.section.header {
+  background-color: blue;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: auto;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.section.header div.header-title {
+  font-size: 2.75rem;
+  font-weight: 600;
+}
+
+@media only screen and (min-width: 300px) {
+  .section.header div.header-title div.header-title {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .section.header div.header-title div.header-title {
+    font-size: 2.75rem;
+  }
+}
+
+.section.header div.header-subtitle {
+  font-size: 1.7rem;
+  font-weight: 300;
+  margin: 0 auto 0 auto;
+}
+
+@media only screen and (min-width: 300px) {
+  .section.header div.header-subtitle div.header-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .section.header div.header-subtitle div.header-subtitle {
+    font-size: 1.7rem;
+  }
+}
+
+.section.header .btn, .section.header .btn-small, .section.header .btn-large {
+  margin-top: 25px;
+}
+
+.section.header .search {
+  margin-top: 2.575rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 1em;
+}
+
+@media only screen and (min-width: 300px) {
+  .section.header .search {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    grid-column-gap: 0em;
+    grid-row-gap: 1em;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .section.header .search {
+    -ms-grid-columns: (1fr)[3];
+        grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 1em;
+  }
+}
+
+.section.header .search .input-wrapper {
+  background: white;
+  padding: 8px 8px 8px 8px;
+  border-radius: .275rem;
+}
+
+.section.header .search .input-wrapper input {
+  margin: 0;
+}
+
+.section.header .search .btn-large {
+  margin-top: 0;
+}

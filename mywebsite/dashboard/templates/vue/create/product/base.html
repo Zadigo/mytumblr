@@ -1,0 +1,175 @@
+{% load i18n %}
+
+<!-- IMAGES -->
+{% include "vue/create/product/images.html" %}
+
+<script>
+    Vue.component("discount-section", {
+        name: "ToggleDiscount",
+        data() {
+            return {
+                showdiscountfield: false
+            }
+        },
+        methods: {
+            toggle: function () {
+                this.$data.showdiscountfield = !this.$data.showdiscountfield
+            }
+        }
+    })
+
+
+    Vue.component("quantity-section", {
+        name: "ToggleQuantity",
+        data() {
+            return {
+                showquantityfield: false
+            }
+        },
+        methods: {
+            toggle: function () {
+                this.$data.showquantityfield = !this.$data.showquantityfield
+            }
+        }
+    })
+
+    
+    
+    
+    
+    // SIZE
+    
+    var simpleinputtext = {
+        props: ["index", "type", "name", "placeholder", "value", "newfield"],
+        template: `
+        <input :type="type" :value="value" :id="inputname() + '_' + index"
+             :name="inputname()" :placeholder="placeholder"
+                class="form-control" autocomplete="off">
+        `,
+        methods: {
+            doshow: function () {
+                this.$emit("doshow", this.$props.name)
+            },
+            inputname: function () {
+                if (this.$props.newfield) {
+                    return "new-" + this.$props.name
+                } else {
+                    return this.$props.name
+                }
+            }
+        }
+    }
+    
+    var addvariantcomponent = {
+        props: ["variants"],
+        name: "SizeInputFields",
+        components: { 
+            "simple-input-text": simpleinputtext 
+        },
+        delimiters: ["[[", "]]"],
+        template: `
+        <div class="form-group">
+            <div v-for="(variant, index) in variants" :key="variant.pk" class="form-row mt-3">
+                <div class="col-2">
+                    <input v-if="!variant.newfield" type="hidden" :value="variant.pk" name="variant-key">
+                    <simple-input-text :type ="'text'" :name="'variant'" :key="variant.pk" :index="index"
+                        :value="variant.name" :newfield="variant.newfield" :placeholder="'Taille'" />
+                </div>
+
+                <div class="col-5">
+                    <simple-input-text :type="'text'" :name="'verbose-name'" :key="variant.pk" :index="index"
+                        :value="variant.verbose_name" :newfield="variant.newfield" :placeholder="'Nom'" />
+                </div>
+                    
+                <div class="col-5">
+                    <a @click="startadd" class="btn btn-sm btn-primary m-0" style="height: 35px;">
+                        <i class="fas fa-plus"></i>
+                    </a>
+
+                    <a @click="startremove(index)" class="btn btn-sm btn-primary m-0 mr-1" style="height: 35px;">
+                        <i class="fas fa-minus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        `,
+        computed: {
+            keys() {
+                var primarykeys = []
+                _.forEach(this.$data.variants, (variant) => {
+                    primarykeys.push(variant.id)
+                })
+                return primarykeys
+            }
+        },
+        methods: {
+            startadd: function () {
+                this.$emit("startadd")
+            },
+            startremove: function () {
+                this.$emit("startremove")
+            }
+        }
+    }
+
+    Vue.component("variant-section", {
+        name: "VariantSection",
+        components: { addvariantcomponent },
+        data() {
+            return {
+                showvariantfields: false,
+                selectedvariantid: 1,
+                fieldcount: 1,
+                variants: [
+                    { id: 1, pk: 1, name: "", verbose_name: "", in_stock: true, active: true, newfield: true }
+                ]
+            }
+        },
+        beforeMount() {
+            var variants = []
+            try {
+                variants = product.variant
+            } catch (error) {
+                // DO NOTHING
+            }
+            if (variants.length > 0) {
+                _.forEach(variants, (variant) => {
+                    variant["newfield"] = false
+                })
+                this.$data.variants = variants
+                this.$data.showvariantfields = true
+                this.$data.fieldcount = this.$data.variants.length
+            }
+        },
+        methods: {
+            template: function (id) {
+                return { id: id, pk: id, name: "", verbose_name: "", in_stock: true, active: true, newfield: true }
+            },
+            toggle: function () {
+                this.$data.showvariantfields = !this.$data.showvariantfields
+            },
+            add: function () {
+                var lastvariant = _.last(this.$data.variants)
+                this.$data.variants.push(
+                    this.template(lastvariant.id + 1)
+                )
+                this.alterfieldcount("add")
+            },
+            remove: function (index) {
+                var currentlength = this.$data.variants.length
+                if (currentlength !== 1) {
+                    this.$data.variants.pop(index)
+                }
+                this.alterfieldcount("sub")
+            },
+            alterfieldcount: function (method) {
+                if (method === "add") {
+                    this.$data.fieldcount = this.$data.fieldcount + 1
+                }
+                if (method === "sub") {
+                    this.$data.fieldcount = this.$data.fieldcount - 1
+                }
+            }
+        }
+    })
+</script>

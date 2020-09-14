@@ -1,0 +1,29 @@
+{% load i18n %}
+
+<ul class="sidebar">
+    <li>
+        <a href="{% url 'feed:timeline' %}">
+            {% trans "Accueil" %}
+        </a>
+    </li>
+    <li>
+        <a href="{ url '' }">
+            {% trans "Explorer" %}
+        </a>
+    </li>
+    <li>
+        <a href="{ url '' }">
+            {% trans "Notifications" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'feed:user_timeline' user.username %}">
+            {% trans "Profil" %}
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'uploads:new' %}" class="btn btn-lg">
+            {% trans "Upload" %}
+        </a>
+    </li>
+</ul>

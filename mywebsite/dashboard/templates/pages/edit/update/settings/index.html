@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Réglages de la boutique" %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3">
+            <a href="{% url 'dashboard:settings:general' %}">
+                <div class="card">
+                    <div class="card-body">
+                        {% trans "Général" %}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'dashboard:settings:store' %}">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-shop"></i>
+                        {% trans "Boutique" %}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'dashboard:settings:analytics' %}">
+                <div class="card">
+                    <div class="card-body">
+                        <i class="fas fa-shop"></i>
+                        {% trans "Analytics" %}
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block bottom_form_buttons %}
+    {% include "components/edit/actions/bottom.html" %}
+{% endblock %}

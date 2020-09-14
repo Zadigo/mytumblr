@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load i18n humanize static suggestions notifications %}
+
+{% block title %}{% trans "Accueil" %}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block hero %}
+    <div id="vue_feed_app">
+        <div class="section full-page">
+            <div class="row">
+                <!-- LEFT -->
+                <div class="col-3 hide-on-med-and-down" id="left">
+                    <div class="sidebar-wrapper mt-5">
+                        <ul class="sidebar mt-5danger pl-3 pr-3">
+                            <li class="mb-3">
+                                <i class="fa fa-home fa-2x mr-3"></i>
+                                <a href="{% url 'feed:timeline' %}" class="font-weight-bold">
+                                    {% trans "Home" %}
+                                </a>
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa fa-bell fa-2x mr-3"></i>
+                                <a href="{% url 'notifications:home' %}" class="font-weight-bold">
+                                    {% trans "Notifications" %}
+
+                                    <div class="badge badge-danger">
+                                        {% total %}
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="mb-3">
+                                <i class="fa fa-user fa-2x mr-3"></i>
+                                <a href="{% url 'feed:user_timeline' user.username %}" class="font-weight-bold">
+                                    {% trans "Profile" %}
+                                    <small>@{{ user.username }}</small>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="upload-button pl-3 pr-3 mt-6">
+                            <a  href="{% url 'uploads:new' %}" class="btn btn-lg btn-block btn-outline-primary mt-3">
+                                {% trans "Upload" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MIDDLE -->
+                <div class="col-sm-12 col-md-6 blue lighten-1" id="middle">
+                    <!-- HEADER -->
+                    {% block middle_header %}{% endblock %}
+                    <!-- CONTENT -->
+                    {% block middle %}{% endblock %}
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col-3 blue hide-on-med-and-down" id="right">
+                    {% block right %}
+                        <div class="suggestions-wrapper">
+                            <div class="header mt-3">
+                                <form>
+                                    <div class="form-group">
+                                        <input class="form-control" type="search" name="search" id="search">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- SUGG. USERS -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>{% trans "Suggested users" %}</h4>
+
+                                    <user-cards-component @changesinglestate="dochange" :users="suggestedusers" inline-template>
+                                        <div class="row ml-0 mr-0">
+                                            <div class="suggested-users">
+                                                <div v-for="(user, i) in users" :key="user.id" class="col-12">
+                                                    <div
+                                                        class="user pt-3 pb-3 d-flex flex-direction-row justify-content-around">
+                                                        <div class="avatar">
+                                                            <img :src="user.url" alt="avatar" class="img-fluid">
+                                                        </div>
+
+                                                        <div class="user-infos">
+                                                            <p class="font-weight-bold">
+                                                                <a href="http://" class="username">Eugénie</a>
+                                                            </p>
+                                                        </div>
+
+                                                        <div v-if="user.state==='Follow'" class="follow-button">
+                                                            <single-follow-button
+                                                                @follow="changesinglestate(user.id, user.state)" :key="user.id"
+                                                                    :name="'Follow'" :extra_class="'btn-sm btn-outline-danger'"
+                                                                        :state="user.state" :data="'Eugénie-' + user.id" />
+                                                        </div>
+
+                                                        <div v-else class="follow-button">
+                                                            <single-unfollow-button
+                                                                @follow="changesinglestate(user.id, user.state)" :key="user.id"
+                                                                    :name="'Unfollow'" :extra_class="'btn-sm btn-outline-danger'"
+                                                                        :state="user.state" :data="'Eugénie-' + user.id" />
+                                                        </div>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </user-cards-component>
+                                </div>
+                            </div>
+
+                            <!-- EXPLORE -->
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h4>{% trans "Explore" %}</h4>
+
+                                </div>
+                            </div>
+                        </div>                        
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block vuejs_scripts %}
+    <script>
+        var users = {% users request %}
+    </script>
+    <!-- GLOBAL -->
+    {% include "vue/global.html" %}
+    <!-- BASE -->
+    {% include "vue/base.html" %}
+{% endblock %}
+
+{% block extra_scripts %}
+    <!-- WAYPOINTS -->
+    <script src="{% static 'waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+
+    <!-- TIMELINE -->
+    <script src="{% static 'timeline.js' %}"></script>
+    <script src="{% static 'full_page.js' %}"></script>
+{% endblock %}

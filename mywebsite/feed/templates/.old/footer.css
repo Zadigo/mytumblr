@@ -1,0 +1,197 @@
+.minimalist-footer .links a, .enhanced-minimalist-footer .with-social a, .enhanced-minimalist-footer .links a {
+  color: inherit;
+}
+
+.page-footer {
+  padding-top: 40px;
+}
+
+.page-footer .row {
+  margin-bottom: 0;
+}
+
+.page-footer p > a {
+  color: white;
+}
+
+@media only screen and (min-width: 300px) {
+  .page-footer h4:not(:first-child),
+  .page-footer h5:not(:first-child) {
+    margin-top: 2rem;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .page-footer h4, .page-footer h5 {
+    margin-top: 1.09333rem;
+  }
+}
+
+.page-footer #contact p * {
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.page-footer #contact p i {
+  font-size: 20px;
+  margin-right: 15px;
+}
+
+.page-footer .footer-copyright {
+  margin-top: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.page-footer .footer-copyright p, .page-footer .footer-copyright a {
+  margin: 0;
+}
+
+@media only screen and (min-width: 300px) {
+  .page-footer .footer-copyright {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: left;
+        -ms-flex-pack: left;
+            justify-content: left;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .page-footer .footer-copyright {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+.page-footer .footer-copyright * {
+  color: white;
+}
+
+@media only screen and (min-width: 301px) {
+  .page-footer .footer-copyright * {
+    margin-top: 5px;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  .page-footer .footer-copyright *:not(:first-child) {
+    margin-left: 40px;
+  }
+}
+
+.page-footer .footer-copyright.social {
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.page-footer .footer-copyright.social ul#social-items li {
+  display: inline-block;
+}
+
+.page-footer .footer-copyright.social ul#social-items li:not(:last-child) {
+  margin-right: 14px;
+}
+
+.page-footer .footer-copyright.social ul#social-items li i {
+  margin-right: 5px;
+  font-size: 18px;
+  line-height: inherit;
+  vertical-align: middle;
+}
+
+.minimalist-footer {
+  padding: 2rem;
+}
+
+.minimalist-footer .links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.enhanced-minimalist-footer {
+  margin-top: 4rem;
+  border-top: 1px solid #c7c7c7;
+}
+
+.enhanced-minimalist-footer .with-payments {
+  padding: 1.5rem;
+  border-bottom: 1px solid white;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.enhanced-minimalist-footer .with-payments .payment-methods {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.enhanced-minimalist-footer .with-payments .payment-methods i {
+  font-size: 32px;
+  color: #484848;
+}
+
+.enhanced-minimalist-footer .with-payments .payment-methods i:not(:last-child) {
+  padding-right: 1rem;
+}
+
+.enhanced-minimalist-footer .with-payments p {
+  font-size: 18px;
+  font-weight: 300;
+  width: 100%;
+  text-align: center;
+  margin: .75rem 0 0 0;
+}
+
+.enhanced-minimalist-footer .with-payments p i {
+  padding-right: .55rem;
+  vertical-align: middle;
+}
+
+.enhanced-minimalist-footer .with-social {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-bottom: 1px solid white;
+  padding: 1.5rem;
+}
+
+.enhanced-minimalist-footer .with-social a {
+  font-size: 24px;
+}
+
+.enhanced-minimalist-footer .with-social a:not(:last-child) {
+  padding-right: 1rem;
+}
+
+.enhanced-minimalist-footer .links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  padding: 1.5rem;
+}

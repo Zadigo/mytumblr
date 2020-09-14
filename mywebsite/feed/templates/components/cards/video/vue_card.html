@@ -1,0 +1,16 @@
+{% load i18n humanize %}
+
+<div class="card mt-3">
+    <div class="card-body">
+        <a href="{ url 'feed:user_timeline' conversation.creator }">
+            <h3>
+                [[ conversation.creator ]]
+            </h3>
+        </a>
+        <p>[[ conversation.text ]]</p>
+        <p>[[ conversation.created_on ]]</p>
+
+        <!-- ACTIONS -->
+        {% include "components/cards/actions.html" %}
+    </div>
+</div>

@@ -1,0 +1,103 @@
+{% extends "base_interface.html" %}
+{% load static i18n humanize cache waypoints %}
+
+{% block title %}{% trans "Feed" %}{% endblock %}
+
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            {% comment "waypoints" %}
+                {% for i in items %}
+                    {% if forloop.counter0 == 100 %}
+                        <div class="card mt-3" id="waypoint-{{ forloop.counter0 }}" data-page="{% if items.has_next %}{{ items.next_page_number }}{% endif %}">
+                    {% else %}
+                        <div class="card mt-3">
+                    {% endif %}
+                            <div class="card-body">
+                                {{ i }}
+                            </div>
+                        </div>
+                {% endfor %}            
+            {% endcomment %}
+
+            <div class="infinite-container">
+                {% for i in items %}
+                    <div class="card mt-3 infinite-item">
+                        <div class="card-body">
+                            {{ i }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if items.has_next %}
+                <a class="infinite-more-link" href="?page={{ items.next_page_number }}"></a>
+            {% endif %}
+
+            <div class="infinite-loading" style="display: none;">
+                ...loading
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'feed:search' %}" method="get">
+                <div class="form-group">
+                    <input class="form-control" type="search" name="q" id="search">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+    
+    <script>
+        var infinite = new Waypoint.Infinite({
+            element: $(".infinite-container")[0],
+            onBeforePageLoad: function () {
+                $(".loading").show();
+            },
+            onAfterPageLoad: function ($items) {
+                $(".loading").hide();
+            }
+        });
+    </script>
+
+    <script>
+        const waypoints = document.querySelectorAll("div[id^='waypoint']")
+        waypoints.forEach((waypoint) => {
+            const w = new Waypoint({
+                element: waypoint,
+                offset: '10%',
+                handler: function (direction) {
+                    var nextpage = $(this.element).data("page")
+                    console.log(this, direction, nextpage)
+                    if (direction === "down") {
+                        // console.log(this)
+                        fetch("{% url 'feed:test_timeline_more' %}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": "{{ csrf_token }}"
+                            },
+                            credentials: "same-origin",
+                            body: JSON.stringify({"page": nextpage})
+                        }).then((response) => {
+                            response.json().then((e) => {
+                                console.log(e.items)
+                            })
+                        })
+                    }
+                }
+            })
+        })
+    </script>
+{% endblock %}

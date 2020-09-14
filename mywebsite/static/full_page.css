@@ -1,0 +1,130 @@
+/* FULL PAGE MODAL */
+
+
+@media (min-width: 576px) {
+	.modal-dialog {
+		max-width: 1280px;
+	}
+}
+
+.full-page-modal {
+	position: fixed;
+	margin: auto;
+	top: 0px;
+	left: 0;
+	right: 0;
+	width: 100%;
+	max-width: 1280px;
+	min-width: 320px;
+	height: auto;
+	z-index: 2000;
+	visibility: hidden;
+	backface-visibility: hidden;
+	overflow: hidden;
+}
+
+.full-page-show {
+	visibility: visible;
+}
+
+.full-page-show.modal-effect ~ .full-page-modal-overlay {
+	background-color: #e4f0e3;
+} 
+
+.full-page-modal-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	opacity: 0;
+	background: rgba(#e4f0e3, 0.8);
+	transition: all 0.3s;
+}
+
+.full-page-show ~ .full-page-modal-overlay {
+	opacity: 1;
+	visibility: visible;
+}
+
+.full-page-modal .header {
+	position: sticky;
+	height: 80px;
+}
+
+.full-page-modal .player {
+    position: relative;
+	overflow: hidden;
+    width: 100%;
+    height: 630px;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+.full-page-modal .player video {
+	display: block;
+    height: 630px;
+    width: 30%;
+    overflow: hidden;
+    object-fit: cover;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 20%;
+}
+
+.full-page-modal .player-close {
+	height: 60px;
+    width: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: .5rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.comments {
+	height: 550px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.header .avatar,
+.comment .avatar {
+	width: 50px;
+	height: 50px;
+}
+
+.comment .comment-text {
+	font-size: 14px;
+}
+
+/* 
+.modal-effect .md-content {
+	-webkit-transform: scale(0.8);
+	-moz-transform: scale(0.8);
+	-ms-transform: scale(0.8);
+	transform: scale(0.8);
+	opacity: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+
+
+.modal-effect .md-content h3,
+.modal-effect .md-content {
+	background: transparent;
+}
+
+.full-page-show.modal-effect .md-content {
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	transform: scale(1);
+	opacity: 1;
+} */

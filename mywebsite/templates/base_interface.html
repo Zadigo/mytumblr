@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n humanize static %}
+
+{% block title %}{% trans "Accueil" %}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'timeline.css' %}">
+    <link rel="stylesheet" href="{% static 'full_page.css' %}">
+{% endblock %}
+
+{% block hero %}
+    <section class="-view">
+        <div id="vue_feed_app">
+            <div class="row" style="height: 100vh;">
+                <div class="col-3 blue">
+                    <div class="row">
+                        <div class="col-12">
+                            {% include "project_components/navs/sidebar_links.html" %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 blue lighten-3">
+                    <!-- HEADER -->
+                    {% block middle_header %}{% endblock %}
+                    <!-- CONTENT -->
+                    {% block middle %}{% endblock %}   
+                     <!-- MODAL -->
+                     {% include "project_components/modals/full_page.html" %}
+                </div>
+
+                <div class="col-3 blue">
+                    <div class="row mt-3">
+                        {% block right %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block extra_scripts %}
+    <!-- WAYPOINTS -->
+    <script src="{% static 'waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+
+    <!-- TIMELINE -->
+    <script src="{% static 'timeline.js' %}"></script>
+    <script src="{% static 'full_page.js' %}"></script>
+{% endblock %}

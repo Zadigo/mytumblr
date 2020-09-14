@@ -1,0 +1,71 @@
+{% extends "base_interface.html" %}
+{% load static i18n humanize cache waypoints %}
+
+{% block title %}{% trans "Feed" %}{% endblock %}
+
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            <div class="timeline infinite-container">
+                {% for video in videos %}
+                    {% include "components/cards/video/card.html" %}
+                {% endfor %}
+            </div>
+            
+            {% if items.has_next %}
+                <a class="infinite-more-link" href="?page={{ items.next_page_number }}"></a>
+            {% endif %}
+            
+            <div class="infinite-loading" style="display: none;">
+                ...loading
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="col-12">
+        <form action="{% url 'feed:search' %}" method="get">
+            <div class="form-group">
+                <input class="form-control" type="search" name="q" id="search" placeholder="{% trans 'Search' %}">
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3>
+                    {% trans "Suggested accounts" %}
+                </h3>
+                
+                {% for suggested_user in suggested_users %}
+                    {% include "components/cards/user/card.html" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block vuejs_scripts %}
+    {% include "vue/feed.html" %}
+{% endblock %}
+
+{% block extra_scripts %}
+    {{ block.super }}
+    
+    {% comment %}
+        <script>
+            var infinite = new Waypoint.Infinite({
+                element: $(".infinite-container")[0],
+                onBeforePageLoad: function () {
+                    $(".loading").show();
+                },
+                onAfterPageLoad: function ($items) {
+                    $(".loading").hide();
+                }
+            });
+        </script>        
+    {% endcomment %}
+{% endblock %}

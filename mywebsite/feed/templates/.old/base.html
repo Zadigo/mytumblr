@@ -1,0 +1,12 @@
+<div class="card mt-3">
+    <div class="card-body">
+        <a href="{% url 'feed:user_timeline' follower.myuser.username %}">
+            <h3>
+                {{ follower.myuser.username }}
+            </h3>
+        </a>
+
+        <!-- ACTIONS -->
+        {% include "components/cards/user/actions.html" %}
+    </div>
+</div>

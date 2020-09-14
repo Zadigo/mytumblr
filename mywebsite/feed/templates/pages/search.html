@@ -1,0 +1,34 @@
+{% extends "base_interface2.html" %}
+{% load i18n humanize %}
+
+{% block title %}{% trans "Feed" %}{% endblock %}
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            <div class="timeline infinite-container">
+                {% for video in videos %}
+                    {% include "components/cards/video/card.html" %}
+                {% endfor %}
+            </div>
+
+            {% if items.has_next %}
+            <a class="infinite-more-link" href="?page={{ items.next_page_number }}"></a>
+            {% endif %}
+
+            <div class="infinite-loading" style="display: none;">
+                ...loading
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right %}
+    <div class="col-12">
+        <form action="{% url 'feed:search' %}" method="get">
+            <div class="form-group">
+                <input class="form-control" type="search" name="q" id="search" placeholder="{% trans 'Search' %}">
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,155 @@
+.view, body, html{
+    height: 100vh;
+}
+
+@media (max-width:740px){
+    .full-page-intro{
+        height:1000px
+    }
+}
+
+.carousel{
+    height:50%
+}
+
+.carousel .carousel-inner,.carousel .carousel-inner .active,.carousel .carousel-inner .carousel-item {
+    height:100%
+}
+    
+@media (max-width:776px){
+    .carousel{height:100%}
+}
+
+.navbar{
+    background-color:rgba(0,0,0,.3)
+}
+
+.page-footer,.top-nav-collapse{
+    background-color:#1C2331
+}
+    
+@media only screen and (max-width:768px){
+    .navbar{
+        background-color:#1C2331
+    }
+}
+
+
+.mt-6, .my-6 {
+    margin-top: 7rem !important;
+}
+
+.section-image {
+    background-image: url("http://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img%20(11).jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.card.low-opacity {
+    background-color: rgba(229, 228, 255, 0.2);
+}
+
+
+.section.banner {
+    height: 500px;
+    max-height: 500px;
+}
+
+
+.avatar {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+}
+
+p#followers a:hover {
+    text-decoration: underline;
+}
+
+.profile-banner {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.sidebar {
+    list-style: none;
+    color: white;
+}
+
+.sidebar li {
+    padding: 1rem;
+    font-weight: 500;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.sidebar li:hover {
+    background-color: aquamarine;
+    color: #007bff;;
+}
+
+
+.new-message-enter-active {
+    transition: all .3s ease;
+}
+
+.new-message-enter {
+    opacity: 0;
+    transform: scale(1.1, 1.1);
+}
+
+.new-message-enter-to {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.action-button:hover {
+    background: #e02c26;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+    color: #ec817d;
+    text-decoration: none;
+    text-shadow: -1px -1px 0 #c2211c;
+    -webkit-transition: all 250ms linear;
+    transition: all 250ms linear;
+}
+
+
+/* USER */
+
+.user-infos .avatar {
+	height: 50px;
+	width: 50px;
+}

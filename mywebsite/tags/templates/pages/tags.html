@@ -1,0 +1,31 @@
+{% extends "base_interface2.html" %}
+{% load static i18n humanize cache waypoints %}
+
+{% block title %}{% trans "Tags" %}{% endblock %}
+
+
+{% block middle %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                {% for video in videos %}
+                    <div class="col-6">
+                        {% include "components/cards/video/card.html" %}
+                    </div>
+                {% empty %}
+                    <div class="text-center">
+                        <h1>
+                            {% trans "Couldn't find this hashtag" %}
+                        </h1>
+                        
+                        <p>
+                            {% blocktrans %}
+                                Looking for videos? Try browsing our trending creators, hashtags, and sounds.
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

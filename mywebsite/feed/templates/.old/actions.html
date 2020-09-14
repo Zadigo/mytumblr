@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if for_follows %}
+    {% if follower in user_feed.myuserprofile.follows.all %}
+        <a href="{% url 'feed:unfollow' follower.myuser.username %}" class="btn btn-sm btn-outline-danger">
+            {% trans "Unfollow" %}
+        </a>
+    {% else %}
+        <a href="{% url 'feed:unfollow' follower.myuser.username %}" class="btn btn-sm btn-outline-primary">
+            {% trans "Follow" %}
+        </a>
+    {% endif %}    
+{% else %}
+    {% if follower in user_feed.myuserprofile.follows.all %}
+        <a href="{% url 'feed:unfollow' follower.myuser.username %}" class="btn btn-sm btn-outline-danger">
+            {% trans "Unfollow" %}
+        </a>
+    {% else %}
+        <a href="{% url 'feed:unfollow' follower.myuser.username %}" class="btn btn-sm btn-outline-primary">
+            {% trans "Follow" %}
+        </a>
+    {% endif %}    
+{% endif %}

@@ -1,0 +1,27 @@
+@import "https://fonts.googleapis.com/css?family=Lato:300,400,700,900&display=swap";
+
+html {
+  font-family: "Lato", "Poppins", "Monserrat", "Raleway", "Ubuntu", sans-serif;
+}
+
+html p, html a, html li, html span,
+html .content-text, html .content-tags .chip,
+html .hover-cover {
+  font-family: "Lato", "Raleway", "Roboto", sans-serif;
+}
+
+pre {
+  display: block;
+  padding: 9.5px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #333;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px;
+  border: 1px solid #888;
+}

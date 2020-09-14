@@ -1,0 +1,19 @@
+<script>
+    Vue.component("button-component", {
+        props: ["clicked", "name", "extra_class"],
+        delimiters: ["[[", "]]"],
+        template: `
+            <button @click="returnstate()" class="btn" :class="extra_class">
+                <div v-if="clicked" class="spinner-border spinner-border-sm" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <span v-else>[[ name ]]</span>
+            </button>
+            `,
+        methods: {
+            returnstate: function () {
+                this.$emit("returnstate")
+            }
+        }
+    })
+</script>

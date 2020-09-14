@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="col-6">
+    <div class="card mt-3">
+        <img src="/media/{{ video.url }}" alt="{{ video.reference }}" class="img-fluid">
+
+        {% if not video.public %}
+            <span class="badge badge-pill badge-danger">
+                {% trans "private" %}
+            </span>            
+        {% endif %}
+
+        {# {% include "components/cards/video/player.html" %} #}
+    </div>
+</div>

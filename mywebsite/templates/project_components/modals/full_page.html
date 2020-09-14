@@ -1,0 +1,381 @@
+{% load i18n cache static %}
+
+<div class="full-page-modal modal-effect full-page-showTEST" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="row">
+                {% cache 3600 test_video user_feed.user.video %}
+                    <!-- VIDEO -->
+                    <div class="col-8">
+                        <div class="player">
+                            <div class="player-close">
+                                <img src="{% static 'icons/close.svg' %}" alt="">
+                            </div>
+                            
+                            <video class="video-fluid" controls loop muted>
+                                <!-- <source src="/media/uploads/user_2/720P_4000K_177928521.mp4" type="video/mp4"> -->
+                            </video>
+                        </div>
+                    </div>                    
+                {% endcache %}
+
+                <div class="col-4">
+                    <!-- HEADER -->
+                    <div class="header p-3">
+                        <div class="d-flex flex-direction-row justify-content-between">
+                            <div class="row">
+                                <div class="col-auto p-0">
+                                    <a href="{ feed:user_timeline video.user.username }">
+                                        <div class="avatar">
+                                            <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col-auto">
+                                    <a href="{ feed:user_timeline video.user.username }">
+                                        {{ video.user.username }} Eugénie Bouchard
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="follow-button">
+                                <button class="btn btn-sm btn-outline-danger">
+                                    {% trans "Follow" %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="m-0">
+
+                    <!-- COMMENTS -->
+                    <div class="comments p-3">
+                        <div class="other">
+                            <!-- SONG INFO -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <i class="fa fa-music mr-3"></i>
+                                    <a href="http://">Thing the song by Googla Mom</a>
+                                </div>
+                            </div>
+    
+                            <hr>
+    
+                            <div class="row">
+                                <div class="col-12">
+                                    {% for comment in comments %}
+                                        
+                                    {% empty %}
+                                        {% if not allow_comments or only_friends %}
+                                            <div class="comment">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p class="font-weight-bold text-muted">
+                                                            {% trans "The user has restricted comments on this video" %}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="comment">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p class="font-weight-bold">
+                                                            {% trans "No comments" %}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="font-weight-bold m-0">
+                                                    <a href="{ url 'feed:user_timeline' comment.user.userame }">
+                                                        {{ comment.user.username }} Eugénie Bouchard
+                                                    </a>
+                                                </p>
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment">
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <div class="avatar">
+                                                    <img src="https://p16-amd-va.tiktokcdn.com/img/tos-maliva-avt-0068/fe4558da9a42f48a3881ea04d21bf2c9~c5_100x100.jpeg" alt="{{ comment.user.username }}" class="img-fluid">
+                                                </div>
+                                            </div>
+        
+                                            <div class="col-8">
+                                                <p class="comment-text">
+                                                    {{ comment.text }}
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi, dolores! Nesciunt illo modi deserunt harum est repellendus reprehenderit nostrum non quia aspernatur? Exercitationem quo velit modi soluta tenetur corporis aspernatur.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="full-page-modal-overlay"></div>

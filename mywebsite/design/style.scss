@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+$white: white;
+
+$base_color: #1d2127;
+
+$blue: #2196f3;
+$light_blue: #42a5f5;
+$hightlight_blue: #42a5f5;
+$highlight_color: #338f7d;
+
+
+$base_font: "Roboto";
+
+$font_size: 18px;
+$font_weight: 300;
+
+$sidebar_icon_size: 1.5em;
+
+$border_radius: 50px;
+
+$btn_outline_primary_border: 2px solid $highlight_color !important;
+
+$shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+@function add_to_border_radius($n, $radius: $border_radius) {
+    @return $radius + $n;
+}
+
+@mixin avatar($height, $width, $has_border: "false") {
+    height: $height;
+    width: $width;
+
+    @if $has_border == "true" {
+        border-color: $white;
+        border-width: 3px;
+        border-style: solid;
+        border-image: initial;
+    }
+}
+
+@for $i from 1 through 4 {
+    @if $i % 2 == 0 {
+        .font-#{$i}x {
+            font-size: $font_size + $i;
+        }
+    }
+}
+
+%cols {
+    height: 100vh;
+}
+
+.mt-6, .my-6 {
+    margin-top: 5rem !important;
+}
+
+
+html {
+    font-size: $font_size;
+    font-weight: $font_weight;
+    font-family: $base_font;
+}
+
+
+.section.full-page {
+    height: 100vh;
+
+    #left {
+        background-color: $base_color;
+    }
+
+    #middle {
+        position: relative;
+    }
+}
+
+
+@media only screen and (max-width: 550px) {
+    .hide-on-med-and-down {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .card.user-infos {
+        text-align: center;
+
+        .avatar {
+            margin: auto !important;
+        }
+    }
+}
+
+.sidebar-wrapper {
+    position: fixed;
+}
+
+ul.sidebar {
+    list-style: none;
+
+    li {
+        transition: all .8s;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: $border_radius;
+
+        &:hover {
+            background-color: $highlight_color;
+        }
+
+        i {
+            color: $white;
+
+            &.fa-2x {
+                font-size: $sidebar_icon_size;
+            }
+        }
+    }
+
+    a {
+        color: $white;
+    }
+}
+
+.upload-button {
+    .btn {
+        color: $white;
+    }
+
+    .btn-outline-primary {
+        border: $btn_outline_primary_border;
+        color: $highlight_color !important;
+    }
+}
+
+%avatar {
+    border-radius: 50%;
+    overflow: hidden;
+
+}
+
+.header .avatar,
+.slim-header .avatar {
+    @include avatar(150px, 150px);
+    @extend %avatar;
+
+    &:hover {
+        box-shadow: $shadow;
+        transition: all 0.55s ease-in-out;
+    }
+}
+
+.suggested-users .avatar {
+    @include avatar(50px, 50px);
+    @extend %avatar;
+}
+
+
+.videos {
+    #video-item {
+        cursor: pointer;
+    }
+}
+
+
+.header.user {
+    transition: all .1s ease-in;
+}
+
+.slim-header {
+    position: sticky;
+    transition: all 1s ease-in;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0px;
+    z-index: 1;
+    display: none;
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+
+    
+    .avatar {
+        animation: slide 1s;
+        @include avatar(80px, 80px, "False")
+    }
+}
+
+@keyframes slide {
+    0% {
+        transform: scaleX(1.2);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+}
+
+.suggested-users {
+    overflow-y: scroll;
+    height: 300px;
+
+    .username {
+        font-size: 14px;
+    }
+}

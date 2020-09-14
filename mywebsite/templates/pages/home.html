@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+<style type="text/css">
+    html,
+    body,
+    header,
+    .view {
+        height: 100%;
+    }
+
+    @media (max-width: 740px) {
+
+        html,
+        body,
+        header,
+        .view {
+            height: 1000px;
+        }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+
+        html,
+        body,
+        header,
+        .view {
+            height: 650px;
+        }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+        .navbar:not(.top-nav-collapse) {
+            background: #1C2331 !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+    {% include "project_components/navs/nav.html" %}
+{% endblock %}
+
+{% block main %}
+    <!-- HERO -->
+    {% include "project_components/home/hero/base.html" %}
+    
+    <!-- MAIN -->
+    {% include "project_components/home/benefits/base.html" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "project_components/navs/footer.html" %}
+{% endblock %}
