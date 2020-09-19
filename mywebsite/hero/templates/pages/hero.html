@@ -1,0 +1,27 @@
+{% extends "base_site.html" %}
+{% load i18n static aws_images %}
+
+{% block title %}{% trans "Mode chic et fun" %} - Nawoka{% endblock %}
+
+{% block navbar %}
+    {% include "project_components/navs/nav.html" %}
+{% endblock %}
+
+{% block extra_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'hero.css' %}">
+{% endblock %}
+
+{% block main_tag_style %}mt-1{% endblock %}
+
+{% block main %}
+    <!-- HERO -->
+    {% include "components/hero/base.html" %}
+    
+    <!-- MAIN -->
+    {% include "components/benefits/base.html" %}
+{% endblock %}
+
+{% block footer %}
+    {% include "project_components/navs/footer.html" %}
+{% endblock %}

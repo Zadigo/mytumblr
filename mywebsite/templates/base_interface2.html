@@ -1,13 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_site.html" %}
 {% load i18n humanize static suggestions notifications %}
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'full_page.css' %}">
 {% endblock %}
 
-{% block hero %}
+{% block main %}
     <div id="vue_feed_app">
         <div class="section full-page">
             <div class="row">
