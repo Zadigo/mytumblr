@@ -41,14 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_extensions',
+    'debug_toolbar',
     # 'rest_framework',
-    # 'social_django',
+    'social_django',
+    
     'accounts',
     'dashboard',
     'feed',
     'tags',
     'uploads',
     'notifications',
+    'hero',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'mywebsite.urls'
@@ -72,6 +77,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -80,10 +86,9 @@ TEMPLATES = [
                 'social_django.context_processors.login_redirect',
 
                 'django.template.context_processors.debug',
-                'mywebsite.context_processors.i18n',
             ],
             'libraries': {
-                'navs': 'templatetags.navs',
+                'navbar': 'templatetags.navbar',
                 
                 'utils': 'accounts.templatetags.utils',
 
@@ -91,9 +96,11 @@ TEMPLATES = [
                 'waypoints': 'feed.templatetags.waypoints',
                 'highlighters': 'feed.templatetags.highlighters',
                 
-                'suggestions': 'templatetags.suggestions',
 
                 'notifications': 'notifications.templatetags.notifications',
+
+                'suggestions': 'templatetags.suggestions',
+                'aws_images': 'templatetags.aws_images',
             }
         },
     },
@@ -312,3 +319,6 @@ try:
         stripe.api_key = STRIPE_LIVE_KEYS[0]
 except:
     pass
+
+
+FEED_MODEL = 'feed.Video'

@@ -1,44 +1,45 @@
 {% load i18n humanize highlighters %}
 
-<div class="card mt-3 infinite-item {% if forloop.last %}mb-3{% endif %}">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-8">
-                <a href="{% url 'feed:user_timeline' video.user.username %}" title="{{ video.user.username }}">
-                    <h3>
-                        {{ video.user.username }}
-                    </h3>
-                </a>
-                
-                <p class="mb-0">{{ video.caption|highlight }}</p>
-                <p class="text-muted">{{ video.created_on|naturaltime }}</p>
+<video-card-component :key="'video_{{ forloop.counter0 }}'" :video="{{ video.id }}" :isliked="'{{ video.has_liked }}'" :likes="{{ video.like_set.count }}" inline-template>
+    <div class="card mt-3 infinite-item {% if forloop.last %}mb-3{% endif %}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <a href="{% url 'feed:user_timeline' video.user.username %}" title="{{ video.user.username }}">
+                        <h3>
+                            {{ video.user.username }}
+                        </h3>
+                    </a>
+                    
+                    <p class="mb-0">{{ video.caption|highlight }}</p>
+                    <p class="text-muted">{{ video.created_on|naturaltime }}</p>
+                </div>
+    
+                {% if video.user.username != user.username %}
+                    <div class="col-4 text-right">
+                        <component :is="{% if video.follows_user %}'unfollow-cards-button'{% else %}'follow-cards-button'{% endif %}" 
+                            :state="{% if video.follows_user %}'unfollow'{% else %}'follow'{% endif %}" 
+                                :data="'{{ video.user.username }}'" />
+                    </div>                
+                {% endif %}
             </div>
-
-            {% if video.user.username != user.username %}
-                <div class="col-4 text-right">
-                    <component :is="{% if video.follows_user %}'unfollow-cards-button'{% else %}'follow-cards-button'{% endif %}" 
-                        :state="{% if video.follows_user %}'unfollow'{% else %}'follow'{% endif %}" 
-                            :data="'{{ video.user.username }}'" />
-                </div>                
-            {% endif %}
-        </div>
-
-        <div class="row">
-            <div class="col-12">                
-                {% include "components/cards/video/image.html" %}
-            </div>
-        </div>
-            
-        {% comment %}
-            <div class="row video-player">
-                <div class="col-12">
-                    {% include "components/cards/video/player.html" %}
+    
+            <div class="row">
+                <div class="col-12">                
+                    {% include "components/cards/video/image.html" %}
                 </div>
             </div>
-        {% endcomment %}
-
-
-        <!-- ACTIONS -->
-        {% include "components/cards/actions.html" %}
+                
+            {% comment %}
+                <div class="row video-player">
+                    <div class="col-12">
+                        {% include "components/cards/video/player.html" %}
+                    </div>
+                </div>
+            {% endcomment %}
+    
+            <!-- Actions -->
+            {% include "components/cards/actions.html" %}
+        </div>
     </div>
-</div>
+</video-card-component>

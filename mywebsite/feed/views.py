@@ -15,10 +15,10 @@ from django.http.response import Http404, JsonResponse
 from django.shortcuts import redirect, render, reverse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.generic import DetailView, FormView, ListView, View
-
-from feed import models
 from notifications import choices as notification_choices
 from notifications import models as notification_models
+
+from feed import models
 
 MYUSER = get_user_model()
 
@@ -66,6 +66,7 @@ def test_timeline(request):
 
     return render(request, 'pages/test_feed.html', {'items': numbers})
 
+
 @require_POST
 def test_timeline_more(request):
     numbers_list = range(1, 1000)
@@ -78,7 +79,6 @@ def test_timeline_more(request):
     except EmptyPage:
         numbers = paginator.page(paginator.num_pages)
     return JsonResponse(data={'items': str(numbers)})
-
 
 
 class CustomDetailView(DetailView):
@@ -114,6 +114,7 @@ class UserTimeLine(LoginRequiredMixin, CustomDetailView):
         user_videos = user.video_set.all()
         context['likes'] = user_videos.aggregate(Count('like'))
         return context
+
 
 class SearchView(LoginRequiredMixin, ListView):
     model = models.Video

@@ -1,27 +1,30 @@
-{% extends "base_interface2.html" %}
+{% extends "base_interface.html" %}
 {% load static i18n humanize cache waypoints %}
 
 {% block title %}{% trans "Feed" %}{% endblock %}
 
 
 {% block middle %}   
-    <!-- VIDEOS -->
+    <!-- Videos -->
     <div class="videos">
-        {% if not vue %}
-            {% for video in videos %}
-                {% include "components/cards/video/card.html" %}
-            {% endfor %}
-        {% else %}
-            <video-cards-component :videos="videos" inline-template>
-                <div class="row mt-3">
-                    <div v-for="video in videos" :key="video.id" class="col-sm-12 col-md-6" id="video-item">
-                        <div class="card mt-3">
-                            <img :src="video.url" alt="video.id" class="card-img-top">
+        {% for video in videos %}
+            {% include "components/cards/video/card.html" %}
+        {% endfor %}
+
+        {% comment %}
+            {% if not vue %}
+            {% else %}
+                <video-cards-component :videos="videos" inline-template>
+                    <div class="row mt-3">
+                        <div v-for="video in videos" :key="video.id" class="col-sm-12 col-md-6" id="video-item">
+                            <div class="card mt-3">
+                                <img :src="video.url" alt="video.id" class="card-img-top">
+                            </div>
                         </div>
                     </div>
-                </div>
-            </video-cards-component>
-        {% endif %}
+                </video-cards-component>
+            {% endif %}            
+        {% endcomment %}
     </div>
 {% endblock %}
 

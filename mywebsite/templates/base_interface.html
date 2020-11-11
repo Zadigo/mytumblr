@@ -132,19 +132,19 @@
     <script>
         var users = {% users request %}
     </script>
-    <!-- GLOBAL -->
+    <!-- Global -->
     {% include "vue/global.html" %}
-    <!-- BASE -->
-    {% include "vue/base.html" %}
+    <!-- Base -->
+    {% include "vue/app.html" %}
 {% endblock %}
 
 {% block extra_scripts %}
-    <!-- WAYPOINTS -->
+    <!-- Waypoints -->
     <script src="{% static 'waypoints/jquery.waypoints.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
 
-    <!-- TIMELINE -->
+    <!-- Timeline -->
     <script src="{% static 'timeline.js' %}"></script>
     <script src="{% static 'full_page.js' %}"></script>
 {% endblock %}

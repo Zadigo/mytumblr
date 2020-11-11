@@ -1,0 +1,99 @@
+<script>
+    var feedapp = new Vue({
+        el: "#vue_feed_app",
+        name: "Feed",
+        delimiters: ["[[", "]]"],
+        components: {
+            "video-card-component": videocard,
+            "user-cards-component": usercards,
+            "follow-button": followbutton,
+            "unfollow-button": unfollowbutton,
+
+            "follow-cards-button": singlefollowbutton,
+            "unfollow-cards-button": singleunfollowbutton,
+        },
+        data() {
+            return {
+                videos: [],
+                suggestedusers: [],
+                // userfeedstate: "follow"
+                userfeedstate: "{% if user.myuserprofile in user_feed.myuserprofile.followed_by.all %}unfollow{% else %}follow{% endif %}"
+            }
+        },
+        beforeMount() {
+            // VIDEOS
+            for (let i = 0; i < 100; i++) {
+                this.$data.videos.push(
+                    {id: i, url: "./assets/1.jpg"}
+                )                   
+            }
+
+            // USERS
+            for (let i = 0; i < 20; i++) {
+                this.$data.suggestedusers.push(
+                    { id: i, url: "./assets/2.jpg", state: "Follow" }
+                )
+            }
+        },
+        computed: {
+            currentstate() {
+                if (this.$data.userfeedstate === "follow") {
+                    return "follow-button"
+                }
+                if (this.$data.userfeedstate === "unfollow") {
+                    return "unfollow-button"
+                }
+            }
+        },
+        methods: {
+            shiftstate: function (state) {
+                this.$data.userfeedstate = state
+            },
+            dochange: function (id, method) {
+                var user = _.find(this.$data.suggestedusers, function (user) { 
+                    return user.id === id
+                })
+                
+                if (method === "Follow") {
+                    user.state = "Unfollow"
+                }
+                if (method === "Unfollow") {
+                    user.state = "Follow"
+                }
+            },
+            newcomment: function (id) {
+                var self = this
+                fetch("{% url 'feed:comment' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({ 'id': id, 'text': self.$data.newmessage })
+                }).then((response) => {
+                    $("#new-comment-modal").modal("toggle")
+                }).catch((error) => {
+                    console.log(error)
+                })
+            },
+            report: function (url, id) {
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: JSON.stringify({ 'id': id })
+                }).then((response) => {
+                    if (response.status === 200) {
+
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }
+        }
+    })
+</script>
