@@ -197,13 +197,10 @@ def add_like(request):
         video.like_set.filter(user=request.user).delete()
     else:
         video.like_set.create(user=request.user)
-
-    notification_models.Notification.objects.create(
-        user=video.user, 
-        video=video, 
-        notification_type=notification_choices.NotificationTypes.LIKE
-    )
-
+        video.notification_set.create(
+            user=request.user, 
+            notification_type=notification_choices.NotificationTypes.LIKE
+        )
     return JsonResponse(data={'state': True, 'total_likes': video.like_set.all().count()})
 
 

@@ -1,21 +1,28 @@
-{% extends "base_interface2.html" %}
-{% load i18n %}
+{% extends "base_interface.html" %}
+{% load i18n cache %}
 
 {% block middle %}
-<!-- VIDEOS -->
-<div class="notifications mt-3">
-    {% for notification in notifications %}
-        <div class="card mt-3">
-            <div class="card-body {% if not notification.read %}red lighten-4{% else %}white{% endif %}">
-                {% if notification.notification_type == "Shoutout" %}
-                    <a href="{% url 'feed:user_timeline' notification.video.user.username %}">
-                        {% trans "Go to" %}
-                    </a>
-                {% else %}
-                    {{ notification.notification_type }}                    
-                {% endif %}
-            </div>
-        </div>
-    {% endfor %}
-</div>
+    {% cache 600 notifications request.user.username %}
+        <div class="notifications mt-3">
+            {% for notification in notifications %}
+                <div class="card mt-3">
+                    <div class="card-body {% if not notification.read %}red lighten-4{% else %}white{% endif %}">
+                        {% if notification.notification_type == "Shoutout" %}
+                            <a href="{% url 'feed:user_timeline' notification.video.user.username %}">
+                                {% trans "Go to" %}
+                            </a>
+                        {% else %}
+                            {{ notification.notification_type }}                    
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-12">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>        
+    {% endcache %}
 {% endblock %}

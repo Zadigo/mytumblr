@@ -3,12 +3,10 @@ import secrets
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.expressions import F
-from django.shortcuts import reverse
-from django.views.decorators.cache import cache_control
+from tags import models as tags_models
 
 from feed import logic, managers, validators
-
-from tags import models as tags_models
+from feed.choices import MediaTypes
 
 MYUSER = get_user_model()
 
@@ -35,6 +33,7 @@ class Video(models.Model):
     views       = models.PositiveIntegerField()
 
     # music = models.ForeignKey(Music, on_delete=models.SET_NULL, blank=True, null=True)
+    media_type = models.CharField(max_length=50, choices=MediaTypes.choices, default=MediaTypes.IMAGE)
 
     reports   = models.IntegerField(default=0)
     reported     = models.BooleanField(default=False)

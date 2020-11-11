@@ -19,6 +19,91 @@
 </script>
 
 <script>
+    Vue.component("video-player", {
+        props: ["id", "videosource", "poster"],
+        name: "VideoPlayer",
+        template: `
+        <video width="800" class="vjs-custom-skin video-js" :id="id" data-setup="{}" preload="auto" controls>
+            <source :src="videosource" type="video/mp4" />
+        </video>
+        `,
+        data() {
+            return {
+                videoplayer: null,
+
+                currenttime: undefined,
+                duration: undefined,
+                remaining: undefined,
+                howmuchisdowloaded: undefined
+            }
+        },
+        mounted() {
+            var self = this
+            var options = {
+                responsive: true,
+                aspectRatio: "16:9",
+                fluid: true,
+                liveui: false,
+                inactivityTimeout: 2000,
+                playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 2],
+                userActions: {
+                    hotkeys: function (event) {
+                        // if (event.which === 32) {
+                        //     if (this.paused()) {
+                        //         this.play()
+                        //     } else {
+                        //         this.pause()
+                        //     }
+                        // }
+
+                        // if (event.which === 70) {
+                        //     if (this.isFullscreen()) {
+                        //         this.isFullscreen(false)
+                        //     } else {
+                        //         this.isFullscreen(true)
+                        //     }
+                        // }
+                    }
+                }
+            }
+
+            var player = videojs(self.$props.id, options, function () {
+
+                this.on("play", () => {
+                    self.duration = this.duration()
+                    // self.remaining = this.remainingTime()
+                    self.howmuchisdowloaded = this.bufferedPercent()
+                    self.currenttime = this.currentTime()
+                })
+
+                this.on("timeupdate", () => {
+                    self.remaining = this.remainingTime()
+                })
+
+                player.volume(1)
+            })
+
+            // var custombutton = videojs.getComponent("Button");
+            // var button = new custombutton(player, {
+            //     clickHandler: function (event) {
+            //         videojs.log('Clicked');
+            //     }
+            // })
+            // var button = player.addChild("button");
+            // console.log(button.el());
+            player.poster(this.$props.poster)
+            self.videoplayer = player
+        },
+        beforeDestroy() {
+            this.videoplayer.on("ended", () => {
+                this.videoplayer.dispose()
+            })
+        }
+    })
+
+</script>
+
+<script>
     var mixins = {
         methods: {
             buildurl: function (state, data) {

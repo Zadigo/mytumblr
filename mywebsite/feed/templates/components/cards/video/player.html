@@ -1,13 +1,1 @@
-<div class="player" id="player-{{ forloop.counter }}" data-id="{{ forloop.counter }}">
-    <div class="thumbnail-overlay">
-        <img class="play-btn" src="http://katehummer.com/resources/dm/play.svg" alt="play" />
-    </div>
-
-    <div class="thumbnail-container">
-        <img class="video-thumbnail" src="http://katehummer.com/resources/dm/video-thumb.jpg" alt="video thumbnail" />
-    </div>
-
-    <video id="video-{{ forloop.counter }}" class="video-fluid z-depth-1" playsinline="playsinline" controls loop muted>
-        <source src="/media/{{ video.url }}" type="video/mp4">
-    </video>
-</div>
+<video-player :id="'video_{{ video.pk }}'" :videosource="'/media/{{ video.url }}'" />

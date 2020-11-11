@@ -24,20 +24,20 @@
                 {% endif %}
             </div>
     
-            <div class="row">
-                <div class="col-12">                
-                    {% include "components/cards/video/image.html" %}
-                </div>
-            </div>
-                
-            {% comment %}
+            {% if video.media_type == "Image" %}
+                <div class="row">
+                    <div class="col-12">                
+                        {% include "components/cards/video/image.html" %}
+                    </div>
+                </div>                
+            {% else %}
                 <div class="row video-player">
                     <div class="col-12">
                         {% include "components/cards/video/player.html" %}
                     </div>
-                </div>
-            {% endcomment %}
-    
+                </div>                
+            {% endif %}
+                    
             <!-- Actions -->
             {% include "components/cards/actions.html" %}
         </div>
