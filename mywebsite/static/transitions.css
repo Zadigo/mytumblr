@@ -1,0 +1,13 @@
+.comments-transition-enter-active {
+    transition: all .3s  ease;
+}
+.comments-transition-enter,
+.comments-transition-leave-to {
+    opacity: 0;
+    transform: scale(.9, .9);
+}
+.comments-transition-enter-to,
+.comments-transition-leave {
+    opacity: 1;
+    transform: scale(1, 1);
+}

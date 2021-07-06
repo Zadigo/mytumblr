@@ -1,3 +1,5 @@
+{% load notifications %}
+
 <script>
     var feedapp = new Vue({
         el: "#vue_feed_app",
@@ -11,14 +13,23 @@
 
             "follow-cards-button": singlefollowbutton,
             "unfollow-cards-button": singleunfollowbutton,
+            "comments-component": commentscomponent
         },
         data() {
             return {
                 videos: [],
                 suggestedusers: [],
                 // userfeedstate: "follow"
-                userfeedstate: "{% if user.myuserprofile in user_feed.myuserprofile.followed_by.all %}unfollow{% else %}follow{% endif %}"
+                userfeedstate: "{% if user.myuserprofile in user_feed.myuserprofile.followed_by.all %}unfollow{% else %}follow{% endif %}",
+
+                currentselectedvideo: null,
+                currentselectedcomments: [],
+
+                notificationscount: 0
             }
+        },
+        created() {
+            this.notificationscount = "{% total %}" * 1
         },
         beforeMount() {
             // VIDEOS
@@ -93,6 +104,13 @@
                 }).catch((error) => {
                     console.log(error)
                 })
+            },
+            setcurrentcomments: function (reference, comments) {
+                this.currentselectedvideo = reference
+                this.currentselectedcomments = comments
+            },
+            refreshcomments: function (comments) {
+                this.currentselectedcomments = comments
             }
         }
     })

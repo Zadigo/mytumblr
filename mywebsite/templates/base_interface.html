@@ -6,6 +6,7 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'full_page.css' %}">
+    <link rel="stylesheet" href="{% static 'transitions.css' %}">
 {% endblock %}
 
 {% block main %}
@@ -28,7 +29,10 @@
                                     {% trans "Notifications" %}
 
                                     <div class="badge badge-danger">
-                                        {% total %}
+                                        {% comment %}
+                                            {% total %}
+                                        {% endcomment %}
+                                        [[ notificationscount ]]
                                     </div>
                                 </a>
                             </li>

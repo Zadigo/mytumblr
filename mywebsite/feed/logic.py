@@ -1,6 +1,7 @@
 import datetime
+import secrets
 
 def upload_video_path(instance, filename):
-    # current_date = datetime.datetime.now().date()
-    # formatted_date = f'{current_date.year}{current_date.month}{current_date.day}'
-    return f'uploads/user_{instance.user.id}/{filename}'
+    _, extension = filename.split('.')
+    new_file_name = secrets.token_hex(5)
+    return f'uploads/user_{instance.user.id}/{new_file_name}.{extension}'

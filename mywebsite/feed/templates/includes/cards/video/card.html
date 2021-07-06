@@ -1,6 +1,6 @@
-{% load i18n humanize highlighters %}
+{% load i18n humanize highlighters cache %}
 
-<video-card-component :key="'video_{{ forloop.counter0 }}'" :video="{{ video.id }}" :isliked="'{{ video.has_liked }}'" :likes="{{ video.like_set.count }}" inline-template>
+<video-card-component @seecomments="setcurrentcomments" :key="'video_{{ forloop.counter0 }}'" :video="{{ video.id }}" :reference="'{{ video.reference }}'" :isliked="'{{ video.has_liked }}'" :likes="{{ video.like_set.count }}" inline-template>
     <div class="card mt-3 infinite-item {% if forloop.last %}mb-3{% endif %}">
         <div class="card-body">
             <div class="row">
@@ -23,23 +23,25 @@
                     </div>                
                 {% endif %}
             </div>
-    
-            {% if video.media_type == "Image" %}
-                <div class="row">
-                    <div class="col-12">                
-                        {% include "components/cards/video/image.html" %}
-                    </div>
-                </div>                
-            {% else %}
-                <div class="row video-player">
-                    <div class="col-12">
-                        {% include "components/cards/video/player.html" %}
-                    </div>
-                </div>                
-            {% endif %}
-                    
+            
+            {% cache 10 "video" video.reference  %}
+                {% if video.media_type == "Image" %}
+                    <div class="row">
+                        <div class="col-12">                
+                            {% include "includes/cards/video/image.html" %}
+                        </div>
+                    </div>                
+                {% else %}
+                    <div class="row video-player">
+                        <div class="col-12">
+                            {# {% include "includes/cards/video/player.html" %} #}
+                        </div>
+                    </div>                
+                {% endif %}                
+            {% endcache %}
+            
             <!-- Actions -->
-            {% include "components/cards/actions.html" %}
+            {% include "includes/cards/actions.html" %}
         </div>
     </div>
 </video-card-component>

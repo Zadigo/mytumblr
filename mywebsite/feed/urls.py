@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^test-feed-more$', views.test_timeline_more, name='test_timeline_more'),
     url(r'^test-feed$', views.test_timeline, name='test_timeline'),
 
+    url(r'^single-card-comments', views.single_card_comments, name='single_card_comments'),
+
     url(r'^add-comment$', views.create_comment, name='comment'),
     url(r'^add-like$', views.add_like, name='like'),
     

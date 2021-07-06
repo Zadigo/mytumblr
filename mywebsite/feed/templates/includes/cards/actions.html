@@ -1,12 +1,11 @@
 <div class="actions d-flex flex-direction-row justify-content-right float-right">
     <div class="action-group">
-        <!-- <div @click="shownewmessagemodal({{ video.id }}, {{ video.created_by.username }}, {{ video.body }}, {{ video.videos }})" class="btn btn-sm btn-circle z-depth-0"> -->
-        <div class="btn btn-sm btn-circle z-depth-0">
+        <div @click="seecomments('{{ video.reference }}')" class="btn btn-sm btn-circle z-depth-0" data-toggle="modal" data-target="#comments">
             <i class="fa fa-comment fa-2x"></i>
         </div>
 
         <small>
-            {{ video.comments_set.count|default:0 }}
+            {{ video.comment_set.count|default:0 }}
         </small>
     </div> 
 
@@ -26,7 +25,7 @@
         </div>
         
         <small>
-            {{ video.shares_set.count|default:0 }}
+            {{ video.share_set.count|default:0 }}
         </small>
     </div>
     

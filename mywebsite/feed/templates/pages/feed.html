@@ -8,23 +8,11 @@
     <!-- Videos -->
     <div class="videos">
         {% for video in videos %}
-            {% include "components/cards/video/card.html" %}
+            {% include "includes/cards/video/card.html" %}
         {% endfor %}
 
-        {% comment %}
-            {% if not vue %}
-            {% else %}
-                <video-cards-component :videos="videos" inline-template>
-                    <div class="row mt-3">
-                        <div v-for="video in videos" :key="video.id" class="col-sm-12 col-md-6" id="video-item">
-                            <div class="card mt-3">
-                                <img :src="video.url" alt="video.id" class="card-img-top">
-                            </div>
-                        </div>
-                    </div>
-                </video-cards-component>
-            {% endif %}            
-        {% endcomment %}
+        <!-- Modal -->
+        {% include "includes/modals/comments.html" %}
     </div>
 {% endblock %}
 
@@ -44,4 +32,10 @@
             });
         </script>
     {% endcomment %}
+{% endblock %}
+
+{% block vuejs_scripts %}
+    <!-- Comments -->
+    {% include "vue/components/comments.html" %}
+    {{ block.super }}
 {% endblock %}

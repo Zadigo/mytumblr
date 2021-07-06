@@ -11,6 +11,11 @@
                             <a href="{% url 'feed:user_timeline' notification.video.user.username %}">
                                 {% trans "Go to" %}
                             </a>
+                        {% elif notification.notification_type == "Message" %}
+                            <p class="font-weight-bold">
+                                @{{ notification.comment.user.username }}
+                            </p>
+                            <p>{{ notificaton.comment.text }}</p>
                         {% else %}
                             {{ notification.notification_type }}                    
                         {% endif %}

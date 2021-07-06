@@ -244,13 +244,15 @@
     }
 
     var videocard = {
-        props: ["video", "isliked", "likes"],
+        props: ["video", "reference", "isliked", "likes"],
         name: "VideoCard",
         delimiters: ["[[", "]]"],
         data() {
             return {
                 liked: false,
-                totallikes: 0
+                totallikes: 0,
+
+                currentcomments: []
             }
         },
         beforeMount() {
@@ -285,6 +287,38 @@
                 }).catch((error) => {
                     console.log(error)
                 })
+            },
+            seecomments: function (reference) {
+                this.currentreference = reference
+                var data = new FormData()
+                data.append("reference", reference)
+
+                fetch("{% url 'feed:single_card_comments' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: data
+                })
+                .then((response) => {
+                    response.json().then((data) => {
+                        var retrievedcomments = JSON.stringify(data)
+                        localStorage.setItem("comments", retrievedcomments)
+                        this.currentcomments = data
+                        this.$emit("seecomments", reference, data)
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+                // var oldcomments = localStorage.getItem("comments")
+                // if (oldcomments === null) {
+                // } else {
+                //     console.log(oldcomments[reference])
+                //     var comments = oldcomments[reference]
+                //     this.$emit("seecomments", reference, JSON.parse(comments))
+                // }
             }
         }
     }

@@ -1,0 +1,38 @@
+{% extends "includes/modals/right.html" %}
+{% load i18n %}
+
+{% block modal_id %}comments{% endblock %}
+
+{% block modal_aria %}comments{% endblock %}
+
+{% block modal_title %}Comments{% endblock %}
+
+{% block modal_body %}
+    <comments-component @sendcomment="refreshcomments" :reference="currentselectedvideo" :currentselectedcomments="currentselectedcomments" inline-template>
+        <div class="row">
+            <transition-group class="col-12" name="comments-transition" tag="div">
+                <div v-for="comment in comments" :key="comment.id">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <p class="font-weight-bold">@[[ comment.user__username ]]</p>
+                            [[ comment.text ]]
+                        </div>
+                    </div>
+                </div>
+            </transition-group>
+
+            <div class="col-12 mt-4">
+                <input @keypress.enter="sendcomment(currentselectedcomments)" v-model="newcomment" 
+                    type="text" class="form-control" id="comment" 
+                            placeholder="{% trans 'New comment' %}">
+            </div>
+        </div>
+    </comments-component>
+{% endblock %}
+    
+    
+{% block modal_footer %}
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        {% trans "Close" %}
+    </button>
+{% endblock %}

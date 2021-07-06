@@ -6,15 +6,16 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.cache import cache, caches
+from django.core.cache import cache
 from django.core.paginator import EmptyPage, Page, PageNotAnInteger, Paginator
 from django.db import models, transaction
 from django.db.models import Count
 from django.db.models.expressions import F
 from django.http.response import Http404, JsonResponse
-from django.shortcuts import redirect, render, reverse
-from django.views.decorators.http import require_GET, require_POST
-from django.views.generic import DetailView, FormView, ListView, View
+from django.shortcuts import get_object_or_404, redirect, render, reverse
+from django.views.decorators.http import require_POST
+from django.views.generic import DetailView, ListView, View
+from nltk.tokenize import TweetTokenizer
 from notifications import choices as notification_choices
 from notifications import models as notification_models
 
@@ -210,15 +211,52 @@ def share(request):
     pass
 
 
-@login_required
 @require_POST
+@login_required
+@transaction.atomic
 def create_comment(request):
-    data = json.loads(request.body)
-    video_text = data['text']
-    users = parse_users(video_text)
-    
-    messages.add_message(request, messages.SUCCESS, "Tweet created", extra_tags='alert-success')
-    return JsonResponse(data={'state': True, 'creation_date': 'new_video.created_on'})
+    data = {'state': False}
+    text = request.POST.get('text')
+    reference = request.POST.get('reference')
+
+    if reference is not None:
+        video = get_object_or_404(models.Video, reference=reference)
+        comment = video.comment_set.create(user=request.user, text=text)
+        comments = video.comment_set.values('user__username', 'id', 'text', 'in_reply_to', 'created_on')
+        details = {
+            'user__username': request.user.username,
+            'id': comment.id,
+            'text': comment.text,
+            'in_reply_to': comment.in_reply_to,
+            'created_on': comment.created_on,
+            'liked': False
+        }
+        data.update({'state': True, 'comment': details, 'comments': list(comments)})
+
+        tokenizer = TweetTokenizer()
+        tokens = tokenizer.tokenize(text)
+
+        raw_usernames = filter(lambda x: '@' in x, tokens)
+        if raw_usernames:
+            usernames = []
+            for username in raw_usernames:
+                _, name = username.split('@')
+                if name != request.user.username:
+                    usernames.append(name)
+
+            username_objects = MYUSER.objects.filter(username__in=usernames)
+            notifications = []
+            for username_object in username_objects:
+                notifications.append(
+                    notification_models.Notification(
+                        user=username_object,
+                        comment=comment,
+                        notification_type=notification_choices.NotificationTypes.MESSAGE
+                    )
+                )
+            if notifications:
+                video.notification_set.bulk_create(notifications)
+    return JsonResponse(data=data)
 
 
 @login_required
@@ -253,3 +291,14 @@ def report(request):
                 transaction.rollback()
                 return JsonResponse(data={'state': False})
         return JsonResponse(data={'state': True})
+
+
+@login_required
+@require_POST
+def single_card_comments(request, **kwargs):
+    reference = request.POST.get('reference')
+    comments = []
+    if reference is not None:
+        video = get_object_or_404(models.Video, reference=reference)
+        comments = video.comment_set.values('id', 'user__username', 'text', 'in_reply_to', 'created_on')
+    return JsonResponse(data=list(comments), safe=False)

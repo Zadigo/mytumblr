@@ -1,0 +1,46 @@
+<script>
+    var commentscomponent = {
+        props: ["reference", "currentselectedcomments"],
+        name: "VideoComments",
+        delimiters: ["[[", "]]"],
+        data() {
+            return {
+                newcomment: null
+            }
+        },
+        beforeDestroy() {
+            localStorage.removeItem("comments")
+        },
+        computed: {
+            comments() {
+                var items = [...this.$props.currentselectedcomments]
+                _.forEach(items, (item) => {
+                    item["liked"] = false
+                })
+                return items
+            }
+        },
+        methods: {
+            sendcomment: function (oldcomments) {
+                var data = new FormData()
+                data.append("text", this.newcomment)
+                data.append("reference", this.$props.reference)
+                fetch("{% url 'feed:comment' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    credentials: "same-origin",
+                    body: data
+                })
+                .then((response) => {
+                    response.json().then((data) => {
+                        // oldcomments.push(data.comment)
+                        this.newcomment = null
+                        this.$emit("sendcomment", data.comments)
+                    })
+                })
+            }
+        }
+    }
+</script>
